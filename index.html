@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Loopstudios — Immersive VR experiences that deliver. World-class virtual reality projects since 2011."
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      /* ===================================
+         Tailwind v4 Theme Tokens
+         =================================== */
+      @theme {
+        --color-primary-white: hsl(0, 0%, 100%);
+        --color-primary-black: hsl(0, 0%, 0%);
+        --color-grey-200: hsl(0, 0%, 85%);
+        --color-dark-gray: hsl(0, 0%, 55%);
+
+        --font-alata: "Alata", sans-serif;
+        --font-josefin: "Josefin Sans", sans-serif;
+      }
+
+      /* ===================================
+         Base Resets
+         =================================== */
+      * {
+        @apply m-0 p-0 box-border;
+      }
+
+      html {
+        @apply scroll-smooth;
+        font-size: 15px;
+      }
+
+      body {
+        @apply font-(family-name:--font-alata) text-[15px] leading-relaxed text-primary-black;
+        overflow-x: hidden;
+      }
+
+      img {
+        @apply max-w-full block;
+      }
+
+      a {
+        @apply no-underline text-inherit;
+      }
+
+      ul {
+        @apply list-none;
+      }
+
+      /* ===================================
+         Component Classes via @apply
+         =================================== */
+
+      /* --- Section Container --- */
+      .section-container {
+        @apply w-full max-w-[1160px] mx-auto px-6 lg:px-0;
+      }
+
+      /* --- HERO --- */
+      .hero {
+        @apply relative w-full min-h-[650px] bg-cover bg-center bg-no-repeat flex items-center;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.4)
+          ),
+          url("./images/mobile/image-hero.jpg");
+      }
+
+      @media (min-width: 768px) {
+        .hero {
+          background-image: linear-gradient(
+              rgba(0, 0, 0, 0.4),
+              rgba(0, 0, 0, 0.4)
+            ),
+            url("./images/desktop/image-hero.jpg");
+        }
+      }
+
+      /* --- Navbar --- */
+      .navbar {
+        @apply absolute top-0 left-0 w-full z-50 py-10;
+      }
+
+      .navbar-inner {
+        @apply flex items-center justify-between;
+      }
+
+      .logo {
+        @apply relative z-[60] h-6 w-auto md:h-8;
+      }
+
+      /* --- Hamburger --- */
+      .hamburger {
+        @apply relative z-[60] cursor-pointer bg-transparent border-none p-1 md:hidden;
+      }
+
+      .hamburger-icon {
+        @apply w-6 h-6;
+      }
+
+      /* --- Desktop Nav --- */
+      .nav-desktop {
+        @apply hidden md:flex md:items-center md:gap-8;
+      }
+
+      .nav-link {
+        @apply relative text-primary-white text-[15px] font-(family-name:--font-alata) tracking-wide;
+      }
+
+      .nav-link::after {
+        @apply content-[''] absolute bottom-[-6px] left-1/2 w-0 h-[2px] bg-primary-white;
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        @apply w-6;
+      }
+
+      /* --- Mobile Menu Overlay --- */
+      .mobile-menu {
+        @apply fixed inset-0 bg-primary-black z-[55] flex flex-col justify-center px-6;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .mobile-menu.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .mobile-menu-link {
+        @apply text-primary-white font-(family-name:--font-josefin) font-light text-[24px] uppercase tracking-wider py-2 block;
+        transition: color 0.2s ease;
+      }
+
+      .mobile-menu-link:hover {
+        @apply text-grey-200;
+      }
+
+      /* --- Hero Content --- */
+      .hero-content {
+        @apply mt-10;
+      }
+
+      .hero-title {
+        @apply font-(family-name:--font-josefin) font-light text-primary-white text-[40px] md:text-[72px] leading-[0.95] uppercase tracking-wider border-2 border-primary-white p-6 md:p-10;
+        max-width: 650px;
+      }
+
+      /* ===================================
+         INTERACTIVE VR SECTION
+         =================================== */
+      .interactive-section {
+        @apply py-24;
+      }
+
+      .interactive-wrapper {
+        @apply relative;
+      }
+
+      .interactive-img-wrapper {
+        @apply w-full lg:w-[57%];
+      }
+
+      .interactive-img {
+        @apply w-full h-auto object-cover;
+      }
+
+      .interactive-text-box {
+        @apply text-center mt-12 px-0 lg:absolute lg:bottom-0 lg:right-0 lg:w-[52%] lg:bg-primary-white lg:pt-24 lg:pl-24 lg:text-left lg:mt-0;
+      }
+
+      .interactive-title {
+        @apply font-(family-name:--font-josefin) font-light text-[32px] lg:text-[48px] leading-tight uppercase tracking-wider text-primary-black mb-6;
+      }
+
+      .interactive-text {
+        @apply text-dark-gray text-[15px] leading-[1.7];
+      }
+
+      /* ===================================
+         CREATIONS SECTION
+         =================================== */
+      .creations-section {
+        @apply pb-24;
+      }
+
+      .creations-header {
+        @apply flex flex-col items-center gap-6 mb-12 md:flex-row md:justify-between md:items-center;
+      }
+
+      .creations-title {
+        @apply font-(family-name:--font-josefin) font-light text-[32px] md:text-[48px] uppercase tracking-wider text-center md:text-left;
+      }
+
+      /* SEE ALL button */
+      .btn-see-all {
+        @apply px-10 py-3 border-2 border-primary-black text-primary-black uppercase text-[14px] tracking-[5px] font-(family-name:--font-alata) bg-transparent cursor-pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .btn-see-all:hover {
+        @apply bg-primary-black text-primary-white;
+      }
+
+      .btn-see-all-desktop {
+        @apply hidden md:block;
+      }
+
+      .btn-see-all-mobile-wrapper {
+        @apply flex justify-center mt-8 md:hidden;
+      }
+
+      /* Grid */
+      .creations-grid {
+        @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-7;
+      }
+
+      /* Cards */
+      .creation-card {
+        @apply relative overflow-hidden cursor-pointer;
+      }
+
+      .creation-card picture {
+        @apply block;
+      }
+
+      .creation-card img {
+        @apply w-full h-auto object-cover;
+        transition: opacity 0.3s ease;
+      }
+
+      .creation-card:hover img {
+        opacity: 0.3;
+      }
+
+      .creation-card-overlay {
+        @apply absolute inset-0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.6) 0%,
+          transparent 60%
+        );
+        transition: background 0.3s ease;
+      }
+
+      .creation-card:hover .creation-card-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.7) 0%,
+          rgba(255, 255, 255, 0.7) 100%
+        );
+      }
+
+      .creation-card-title {
+        @apply absolute bottom-5 left-5 lg:bottom-8 lg:left-10 text-primary-white font-(family-name:--font-josefin) font-light text-[24px] lg:text-[32px] uppercase leading-tight z-10;
+        transition: color 0.3s ease;
+      }
+
+      .creation-card:hover .creation-card-title {
+        @apply text-primary-black;
+      }
+
+      /* ===================================
+         FOOTER
+         =================================== */
+      .footer {
+        @apply bg-primary-black py-12;
+      }
+
+      .footer-inner {
+        @apply flex flex-col items-center gap-8 md:flex-row md:justify-between md:items-start md:gap-0;
+      }
+
+      .footer-left {
+        @apply flex flex-col items-center gap-6 md:items-start;
+      }
+
+      .footer-logo {
+        @apply h-6 w-auto;
+      }
+
+      .footer-nav {
+        @apply flex flex-col items-center gap-4 md:flex-row md:gap-8;
+      }
+
+      .footer-link {
+        @apply relative text-primary-white text-[15px] font-(family-name:--font-alata);
+      }
+
+      .footer-link::after {
+        @apply content-[''] absolute bottom-[-6px] left-1/2 w-0 h-[2px] bg-primary-white;
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
+      }
+
+      .footer-link:hover::after {
+        @apply w-6;
+      }
+
+      .footer-right {
+        @apply flex flex-col items-center gap-6 md:items-end;
+      }
+
+      .social-icons {
+        @apply flex items-center gap-4;
+      }
+
+      .social-icon-link {
+        @apply relative;
+      }
+
+      .social-icon-link::after {
+        @apply content-[''] absolute bottom-[-6px] left-1/2 w-0 h-[2px] bg-primary-white;
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
+      }
+
+      .social-icon-link:hover::after {
+        @apply w-full;
+      }
+
+      .social-icon {
+        @apply w-6 h-6;
+      }
+
+      .footer-copyright {
+        @apply text-dark-gray text-[15px];
+      }
+
+      /* --- Attribution --- */
+      .attribution {
+        @apply text-center text-[11px] text-dark-gray mt-4;
+      }
+
+      .attribution a {
+        @apply text-grey-200;
+      }
+    </style>
+
+    <title>Frontend Mentor | Loopstudios Landing Page</title>
+  </head>
+
+  <body>
+    <!-- ===================== HERO SECTION ===================== -->
+    <header class="hero" id="hero">
+      <!-- Navigation -->
+      <nav class="navbar" id="navbar">
+        <div class="section-container navbar-inner">
+          <!-- Logo -->
+          <a href="#" aria-label="Loopstudios home">
+            <img
+              src="./images/logo.svg"
+              alt="Loopstudios logo"
+              class="logo"
+            />
+          </a>
+
+          <!-- Desktop Nav -->
+          <ul class="nav-desktop" id="nav-desktop">
+            <li><a href="#" class="nav-link">About</a></li>
+            <li><a href="#" class="nav-link">Careers</a></li>
+            <li><a href="#" class="nav-link">Events</a></li>
+            <li><a href="#" class="nav-link">Products</a></li>
+            <li><a href="#" class="nav-link">Support</a></li>
+          </ul>
+
+          <!-- Hamburger -->
+          <button
+            class="hamburger"
+            id="hamburger-btn"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+          >
+            <img
+              src="./images/icon-hamburger.svg"
+              alt=""
+              class="hamburger-icon"
+              id="hamburger-icon"
+            />
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu Overlay -->
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <ul>
+          <li><a href="#" class="mobile-menu-link">About</a></li>
+          <li><a href="#" class="mobile-menu-link">Careers</a></li>
+          <li><a href="#" class="mobile-menu-link">Events</a></li>
+          <li><a href="#" class="mobile-menu-link">Products</a></li>
+          <li><a href="#" class="mobile-menu-link">Support</a></li>
+        </ul>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="section-container hero-content">
+        <h1 class="hero-title">Immersive experiences that deliver</h1>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============= INTERACTIVE VR SECTION ============= -->
+      <section class="interactive-section" id="interactive">
+        <div class="section-container interactive-wrapper">
+          <!-- Image -->
+          <div class="interactive-img-wrapper">
+            <picture>
+              <source
+                srcset="./images/desktop/image-interactive.jpg"
+                media="(min-width: 1024px)"
+              />
+              <img
+                src="./images/mobile/image-interactive.jpg"
+                alt="Person wearing VR headset experiencing interactive virtual reality"
+                class="interactive-img"
+              />
+            </picture>
+          </div>
+
+          <!-- Text Box -->
+          <div class="interactive-text-box">
+            <h2 class="interactive-title">The leader in interactive VR</h2>
+            <p class="interactive-text">
+              Founded in 2011, Loopstudios has been producing world-class
+              virtual reality projects for some of the best companies around the
+              globe. Our award-winning creations have transformed businesses
+              through digital experiences that bind to their brand.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============== CREATIONS SECTION =============== -->
+      <section class="creations-section" id="creations">
+        <div class="section-container">
+          <!-- Header -->
+          <div class="creations-header">
+            <h2 class="creations-title">Our Creations</h2>
+            <button class="btn-see-all btn-see-all-desktop" id="btn-see-all">
+              See All
+            </button>
+          </div>
+
+          <!-- Grid -->
+          <div class="creations-grid">
+            <!-- Card: Deep Earth -->
+            <div class="creation-card" id="card-deep-earth">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-deep-earth.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-deep-earth.jpg"
+                  alt="Deep Earth"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">Deep<br />earth</h3>
+            </div>
+
+            <!-- Card: Night Arcade -->
+            <div class="creation-card" id="card-night-arcade">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-night-arcade.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-night-arcade.jpg"
+                  alt="Night Arcade"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">Night<br />arcade</h3>
+            </div>
+
+            <!-- Card: Soccer Team VR -->
+            <div class="creation-card" id="card-soccer-team">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-soccer-team.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-soccer-team.jpg"
+                  alt="Soccer Team VR"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">Soccer<br />team VR</h3>
+            </div>
+
+            <!-- Card: The Grid -->
+            <div class="creation-card" id="card-the-grid">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-grid.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-grid.jpg"
+                  alt="The Grid"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">The<br />grid</h3>
+            </div>
+
+            <!-- Card: From Up Above VR -->
+            <div class="creation-card" id="card-from-above">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-from-above.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-from-above.jpg"
+                  alt="From Up Above VR"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">From up<br />above VR</h3>
+            </div>
+
+            <!-- Card: Pocket Borealis -->
+            <div class="creation-card" id="card-pocket-borealis">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-pocket-borealis.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-pocket-borealis.jpg"
+                  alt="Pocket Borealis"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">Pocket<br />borealis</h3>
+            </div>
+
+            <!-- Card: The Curiosity -->
+            <div class="creation-card" id="card-the-curiosity">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-curiosity.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-curiosity.jpg"
+                  alt="The Curiosity"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">The<br />curiosity</h3>
+            </div>
+
+            <!-- Card: Make It Fisheye -->
+            <div class="creation-card" id="card-make-it-fisheye">
+              <picture>
+                <source
+                  srcset="./images/desktop/image-fisheye.jpg"
+                  media="(min-width: 1024px)"
+                />
+                <img
+                  src="./images/mobile/image-fisheye.jpg"
+                  alt="Make It Fisheye"
+                />
+              </picture>
+              <div class="creation-card-overlay"></div>
+              <h3 class="creation-card-title">Make it<br />fisheye</h3>
+            </div>
+          </div>
+
+          <!-- SEE ALL button (mobile) -->
+          <div class="btn-see-all-mobile-wrapper">
+            <button class="btn-see-all">See All</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer" id="footer">
+      <div class="section-container footer-inner">
+        <!-- Left Column -->
+        <div class="footer-left">
+          <a href="#" aria-label="Loopstudios home">
+            <img
+              src="./images/logo.svg"
+              alt="Loopstudios logo"
+              class="footer-logo"
+            />
+          </a>
+          <ul class="footer-nav">
+            <li><a href="#" class="footer-link">About</a></li>
+            <li><a href="#" class="footer-link">Careers</a></li>
+            <li><a href="#" class="footer-link">Events</a></li>
+            <li><a href="#" class="footer-link">Products</a></li>
+            <li><a href="#" class="footer-link">Support</a></li>
+          </ul>
+        </div>
+
+        <!-- Right Column -->
+        <div class="footer-right">
+          <div class="social-icons">
+            <a href="#" class="social-icon-link" aria-label="Facebook">
+              <img
+                src="./images/icon-facebook.svg"
+                alt=""
+                class="social-icon"
+              />
+            </a>
+            <a href="#" class="social-icon-link" aria-label="Twitter">
+              <img
+                src="./images/icon-twitter.svg"
+                alt=""
+                class="social-icon"
+              />
+            </a>
+            <a href="#" class="social-icon-link" aria-label="Pinterest">
+              <img
+                src="./images/icon-pinterest.svg"
+                alt=""
+                class="social-icon"
+              />
+            </a>
+            <a href="#" class="social-icon-link" aria-label="Instagram">
+              <img
+                src="./images/icon-instagram.svg"
+                alt=""
+                class="social-icon"
+              />
+            </a>
+          </div>
+          <p class="footer-copyright">
+            &copy; 2021 Loopstudios. All rights reserved.
+          </p>
+        </div>
+      </div>
+
+      <p class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+          >Frontend Mentor</a
+        >. Coded by <a href="#">Jarelle Cabug-os</a>.
+      </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="./script.js"></script>
+  </body>
+</html>
