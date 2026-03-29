@@ -61,6 +61,3 @@ loopstudios-landing-page-main/
 1. Clone the repository
 2. Open `index.html` in a browser, or use Live Server on port 5500
 
-## Author
-
-Jarelle Cabug-os
